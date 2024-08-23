@@ -1,0 +1,14 @@
+.toggleButtons {
+    display: flex;
+}
+
+.toggleButtons button{
+    color: #021526;
+    padding: 10px;
+    text-align: center;
+    background-color: transparent;
+    font-weight: 500;
+    font-size: 18px;
+    border: 1px solid #021526;
+    cursor: pointer;
+}

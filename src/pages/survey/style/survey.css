@@ -1,0 +1,49 @@
+.surveyContainer {
+    padding: 30px;
+}
+
+.languages {
+    margin: 40px 20px;
+}
+.image {
+    margin:50px auto;
+    text-align: center;
+}
+
+.image img {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+}
+
+
+.questionAndAnswer {
+    margin-bottom: 40px;
+}
+
+.submit {
+    margin: 40px auto;
+    display: flex;
+    justify-content:end;
+    align-items: center;
+    width: 90%;
+}
+
+
+.submit button {
+    width: 250px;
+    padding: 15px;
+    background-color: #021526;
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.submit button:hover {
+    background-color: #010b14fd;
+}

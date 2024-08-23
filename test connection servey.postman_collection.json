@@ -1,0 +1,68 @@
+{
+	"info": {
+		"_postman_id": "ac87bfd6-e420-4819-a0d2-d1706789eca7",
+		"name": "test connection servey",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26251984"
+	},
+	"item": [
+		{
+			"name": "add answers",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"language\": \"EN\",\r\n    \"channel\": \"Test\",\r\n    \"answers\": [{\r\n        \"questionId\": 1,\r\n        \"answerText\": \"Hello World\"\r\n    }]  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/surveys/answer",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"surveys",
+						"answer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add answers Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"language\": \"EN\",\r\n    \"channel\": \"Test\",\r\n    \"answers\": [{\r\n        \"questionId\": 1,\r\n        \"answerText\": \"Hello World\"\r\n    }]  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/surveys/answer",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"surveys",
+						"answer"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
