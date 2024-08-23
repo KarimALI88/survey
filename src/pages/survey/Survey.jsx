@@ -13,12 +13,13 @@ const Survey = () => {
 
   useEffect(() => {
     getQuestions(); // Fetch questions when component mounts
-  }, []);
+  }, [language]);
 
   // Fetch questions from API
   const getQuestions = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/surveys/questions");
+      const response = await axios.get(`http://localhost:8080/api/surveys/1?language=${language}`);
+      console.log(response);
       setQuestions(response.data.questions); // Assuming the response contains a 'questions' field
     } catch (error) {
       console.error("Error fetching questions:", error);
@@ -49,17 +50,32 @@ const Survey = () => {
   };
 
   // Send answers to API
-  const sendAnswer = async () => {
-    try {
-      const response = await axios.post("http://localhost:8080/api/surveys/answer", {
-        language,
-        answers,
-      });
-      console.log("Response:", response);
-    } catch (error) {
-      console.error("Error sending answers:", error);
-    }
-  };
+const sendAnswer = async () => {
+  try {
+    // Transform answers object into the required format
+    const formattedAnswers = Object.entries(answers).map(([questionId, answer]) => {
+      // If the answer is an array (e.g., from checkboxes), join it into a string
+      const answerText = Array.isArray(answer) ? answer.join(', ') : answer;
+
+      return {
+        questionId: parseInt(questionId, 10),
+        answerText,
+      };
+    });
+
+    const payload = {
+      language,
+      channel: "Mobile",
+      answers: formattedAnswers,
+    };
+
+    const response = await axios.post("http://localhost:8080/api/surveys/answer", payload);
+    console.log("Response:", response);
+  } catch (error) {
+    console.error("Error sending answers:", error);
+  }
+};
+
 
   return (
     <div className="surveyContainer">
@@ -80,7 +96,7 @@ const Survey = () => {
             <Question question={ques.questionText} />
           </div>
           <div className="inputContainer">
-            {ques.questionType === "t" && (
+            {ques.questionType === "3" && (
               <Input
                 type="text"
                 value={answers[ques.questionId] || ""}
@@ -88,14 +104,14 @@ const Survey = () => {
                 placeholder="Enter your answer"
               />
             )}
-            {ques.questionType === "s" && (
+            {ques.questionType === "2" && (
               <textarea
                 value={answers[ques.questionId] || ""}
                 onChange={(e) => handleInputChange(ques.questionId, e.target.value)}
                 placeholder="Enter your answer"
               />
             )}
-            {ques.questionType === "Y" &&
+            {ques.questionType === "1" &&
               ques.acceptableAnswers.map((check) => (
                 <div className="check" key={check.id}>
                   <input
@@ -114,7 +130,7 @@ const Survey = () => {
 
       <div className="submit">
         <button onClick={sendAnswer}>
-          {language === "ar" ? "ارسال" : "Submit"}
+          {language === "AR" ? "ارسال" : "Submit"}
         </button>
       </div>
     </div>

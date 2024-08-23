@@ -6,7 +6,7 @@ import { AppContext } from "./context/appContext";
 function App() {
   const {language} = useContext(AppContext)
   return (
-    <div className="App" style={{direction: language === "ar" ? "rtl":"ltr"}}>
+    <div className="App" style={{direction: language === "AR" ? "rtl":"ltr"}}>
       <Survey />
     </div>
   );

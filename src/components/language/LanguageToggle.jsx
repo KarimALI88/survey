@@ -7,19 +7,19 @@ const LanguageToggle = () => {
   return (
     <div className="toggleButtons">
       <button
-        onClick={() => setLanguage("en")}
+        onClick={() => setLanguage("EN")}
         style={{
-          backgroundColor: language === "en" ? "#021526" : "transparent",
-          color: language === "en" ? "white" : "#021526",
+          backgroundColor: language === "EN" ? "#021526" : "transparent",
+          color: language === "EN" ? "white" : "#021526",
         }}
       >
         English
       </button>
       <button
-        onClick={() => setLanguage("ar")}
+        onClick={() => setLanguage("AR")}
         style={{
-          backgroundColor: language === "ar" ? "#021526" : "transparent",
-          color: language === "ar" ? "white" : "#021526",
+          backgroundColor: language === "AR" ? "#021526" : "transparent",
+          color: language === "AR" ? "white" : "#021526",
         }}
       >
         العربية
