@@ -34,48 +34,34 @@ const Survey = () => {
     }));
   };
 
-  // Handle checkbox change
-  const handleCheckboxChange = (questionId, answerId, isChecked) => {
-    setAnswers((prevAnswers) => {
-      const currentAnswers = prevAnswers[questionId] || [];
-      const updatedAnswers = isChecked
-        ? [...currentAnswers, answerId]
-        : currentAnswers.filter((id) => id !== answerId);
-
-      return {
-        ...prevAnswers,
-        [questionId]: updatedAnswers,
-      };
-    });
+  // Handle radio change
+  const handleRadioChange = (questionId, answerId) => {
+    setAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [questionId]: answerId,
+    }));
   };
 
   // Send answers to API
-const sendAnswer = async () => {
-  try {
-    // Transform answers object into the required format
-    const formattedAnswers = Object.entries(answers).map(([questionId, answer]) => {
-      // If the answer is an array (e.g., from checkboxes), join it into a string
-      const answerText = Array.isArray(answer) ? answer.join(', ') : answer;
-
-      return {
+  const sendAnswer = async () => {
+    try {
+      const formattedAnswers = Object.entries(answers).map(([questionId, answer]) => ({
         questionId: parseInt(questionId, 10),
-        answerText,
+        answerText: Array.isArray(answer) ? answer.join(', ') : answer,
+      }));
+
+      const payload = {
+        language,
+        channel: "Mobile",
+        answers: formattedAnswers,
       };
-    });
 
-    const payload = {
-      language,
-      channel: "Mobile",
-      answers: formattedAnswers,
-    };
-
-    const response = await axios.post("http://localhost:8080/api/surveys/answer", payload);
-    console.log("Response:", response);
-  } catch (error) {
-    console.error("Error sending answers:", error);
-  }
-};
-
+      const response = await axios.post("http://localhost:8080/api/surveys/answer", payload);
+      console.log("Response:", response);
+    } catch (error) {
+      console.error("Error sending answers:", error);
+    }
+  };
 
   return (
     <div className="surveyContainer">
@@ -100,7 +86,7 @@ const sendAnswer = async () => {
               <Input
                 type="text"
                 value={answers[ques.questionId] || ""}
-                onchange={(e) => handleInputChange(ques.questionId, e.target.value)}
+                onChange={(e) => handleInputChange(ques.questionId, e.target.value)}
                 placeholder="Enter your answer"
               />
             )}
@@ -112,16 +98,16 @@ const sendAnswer = async () => {
               />
             )}
             {ques.questionType === "1" &&
-              ques.acceptableAnswers.map((check) => (
-                <div className="check" key={check.id}>
+              ques.acceptableAnswers.map((radio) => (
+                <div className="radio" key={radio.id}>
                   <input
-                    type="checkbox"
-                    value={check.id}
-                    onChange={(e) =>
-                      handleCheckboxChange(ques.questionId, check.id, e.target.checked)
-                    }
+                    type="radio"
+                    name={`question_${ques.questionId}`} // Ensure only one selection per question
+                    value={radio.id}
+                    checked={answers[ques.questionId] === radio.id}
+                    onChange={() => handleRadioChange(ques.questionId, radio.id)}
                   />
-                  <label>{check.text}</label>
+                  <label>{radio.text}</label>
                 </div>
               ))}
           </div>
