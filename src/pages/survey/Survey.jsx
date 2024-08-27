@@ -5,11 +5,13 @@ import Input from "../../components/input/Input";
 import LanguageToggle from "../../components/language/LanguageToggle";
 import { AppContext } from "../../context/appContext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Survey = () => {
   const { language } = useContext(AppContext);
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
+  const navigate = useNavigate()
 
   useEffect(() => {
     getQuestions(); // Fetch questions when component mounts
@@ -57,6 +59,9 @@ const Survey = () => {
       };
 
       const response = await axios.post("http://localhost:8080/api/surveys/answer", payload);
+      if (response) {
+        navigate("/end")
+      }
       console.log("Response:", response);
     } catch (error) {
       console.error("Error sending answers:", error);
